@@ -4,32 +4,27 @@ import { galleryItems } from "./gallery-items.js";
 // console.log(galleryItems);
 
 let myGallery = document.querySelector(".gallery");
-let instanceBlb = "";
+let instanceBlib = "";
 
 function onEscape(evt) {
-  if (!basicLightbox.visible()) {
-    document.removeEventListener("keydown", onEscape);
-    return;
-  }
   if (evt.code === "Escape") {
-    //console.log(instanceBlb);
     if (basicLightbox.visible()) {
-      instanceBlb.close();
-      //console.log("closed!!!!");
-      document.removeEventListener("keydown", onEscape);
-      return;
+      instanceBlib.close();
     }
   }
   // console.log(evt);
 }
 
 function showModalWindow(myLink) {
-  instanceBlb = basicLightbox.create(
-    `<img width="1400" height="900" src="${myLink}"></img>`
+  instanceBlib = basicLightbox.create(
+    `<img width="1400" height="900" src="${myLink}"></img>`,
+    {
+      onShow: (instanceBlib) => document.addEventListener("keydown", onEscape),
+      onClose: (instanceBlib) =>
+        document.removeEventListener("keydown", onEscape),
+    }
   );
-  //console.log(instanceBlb);
-  instanceBlb.show();
-  document.addEventListener("keydown", onEscape);
+  instanceBlib.show();
 }
 
 function galleryOnClick(evt) {
